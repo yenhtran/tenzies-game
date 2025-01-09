@@ -1,8 +1,17 @@
+import { useState } from 'react';
 import Die from './Die';
 
 export default function App() {
-  const dieElements = Array.from({ length: 10}).map(() => {
-    return <Die key={1} value={Math.floor(Math.random() * 6) + 1}/>
+  const [numbers, setNumbers] = useState(generateAllNewDice());
+
+  function generateAllNewDice() {
+    return new Array(10)
+        .fill(0)
+        .map(() => Math.ceil(Math.random() * 6))
+  }
+
+  const dieElements = numbers.map(num => {
+    return <Die key={num} value={num} />
   })
 
   return (
