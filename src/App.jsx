@@ -15,7 +15,19 @@ export default function App() {
       }))
   }
 
-  const dieElements = dice.map(die => <Die key={die.id} value={die.value} />)
+  function hold(id) {
+    setDice(prevDice => prevDice.map(die => die.id === id ? {...die, isHeld: !die.isHeld} : die))
+  }
+
+  const dieElements = dice.map(die => (
+    <Die
+      key={die.id}
+      value={die.value}
+      isHeld={die.isHeld}
+      hold={hold}
+      id={die.id}
+    />
+  ))
 
   function handleClick() {
     setDice(generateAllNewDice())
