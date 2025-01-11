@@ -5,14 +5,22 @@ import { nanoid } from 'nanoid';
 export default function App() {
   const [dice, setDice] = useState(generateAllNewDice());
 
+  function generateNewDie() {
+    return {
+      value: Math.ceil(Math.random() * 6),
+      isHeld: false,
+      id: nanoid()
+    }
+  }
+
   function generateAllNewDice() {
     return new Array(10)
       .fill(0)
-      .map(() => ({
-        value: Math.ceil(Math.random() * 6),
-        isHeld: false,
-        id: nanoid()
-      }))
+      .map(() => generateNewDie())
+  }
+
+  function rollDice() {
+    setDice(prevDice => prevDice.map(die => die.isHeld ? die : generateNewDie()))
   }
 
   function hold(id) {
@@ -29,16 +37,12 @@ export default function App() {
     />
   ))
 
-  function handleClick() {
-    setDice(generateAllNewDice())
-  }
-
   return (
     <main>
       <div className='game-board'>
         {dieElements}
       </div>
-      <button className="roll-dice" onClick={handleClick}>Roll</button>
+      <button className="roll-dice" onClick={rollDice}>Roll</button>
     </main>
   )
 }
