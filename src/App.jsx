@@ -48,12 +48,19 @@ export default function App() {
   return (
     <main>
       {gameWon && <Confetti width={width} height={height}/>}
+      <div aria-live="polite" className='sr-only'>
+        {gameWon && <p>Congratulations! You won! Press "New Game" to start again</p>}
+      </div>
       <h1 className='title'>Tenzies</h1>
       <p className='instructions'>Roll until all die are the same. Click each die to freeze it at its current value between rolls</p>
       <div className='game-board'>
         {dieElements}
       </div>
-      <button className="roll-dice" onClick={rollDice}>{gameWon ? 'New Game' : 'Roll'}</button>
+      <button
+        className="roll-dice"
+        onClick={rollDice}>
+        {gameWon ? 'New Game' : 'Roll'}
+      </button>
     </main>
   )
 }

@@ -4,6 +4,12 @@ export default function Die({ value, isHeld, hold, id }) {
     backgroundColor: isHeld ? "#59E391" : "white"
   }
   return (
-    <button style={styles} onClick={() => hold(id)}>{value}</button>
+    <button
+      style={styles}
+      onClick={() => hold(id)}
+      aria-pressed={isHeld}
+      aria-label={`Die with value ${value}, ${isHeld ? 'held': 'not held'}`}>
+      {value}
+    </button>
   )
 }
