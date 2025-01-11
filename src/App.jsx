@@ -24,7 +24,11 @@ export default function App() {
   }
 
   function rollDice() {
-    setDice(prevDice => prevDice.map(die => die.isHeld ? die : generateNewDie()))
+    if (gameWon) {
+      setDice(generateAllNewDice())
+    } else {
+      setDice(prevDice => prevDice.map(die => die.isHeld ? die : generateNewDie()))
+    }
   }
 
   function hold(id) {
