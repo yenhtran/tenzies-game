@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Die from './Die';
 import { nanoid } from 'nanoid';
 import { useWindowSize } from 'react-use'
@@ -8,6 +8,13 @@ export default function App() {
   const [dice, setDice] = useState(() => generateAllNewDice());
   const { width, height } = useWindowSize()
   const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
+  const newGameFocus = useRef(null);
+
+  useEffect(() => {
+    if (gameWon && newGameFocus.current) {
+      newGameFocus.current.focus()
+    }
+  }, [gameWon])
 
   function generateNewDie() {
     return {
@@ -58,7 +65,8 @@ export default function App() {
       </div>
       <button
         className="roll-dice"
-        onClick={rollDice}>
+        onClick={rollDice}
+        ref={newGameFocus}>
         {gameWon ? 'New Game' : 'Roll'}
       </button>
     </main>
